@@ -1,0 +1,8 @@
+views:
+- name: PlainTextView
+  serializer_class: PlainTextViewSerializer
+collection:
+  id: C93F0D980
+  title: demo_title
+  items:
+  - IF7F1A77F
