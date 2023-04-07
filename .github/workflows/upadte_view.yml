@@ -40,5 +40,6 @@ jobs:
         ls
         git config --global user.name "jungtop"
         git config --global user.email "tenzintopjor27@gmail.com"
+        git add -u
         git commit -a -m "updated views"
         git push
