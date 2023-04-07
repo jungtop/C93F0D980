@@ -34,4 +34,4 @@ jobs:
     - name : Run update_view
       run : |
         source .env/bin/activate
-        python3 ./.github/scripts/update_view.py ${{ github.event.issue.body }} $GITHUB_TOKEN
+        python3 ./.github/scripts/update_view.py ${{ github.event.issue.body }} ${{ GITHUB_TOKEN }}
