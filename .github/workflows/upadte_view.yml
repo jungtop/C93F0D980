@@ -4,16 +4,14 @@ on:
   issues: 
     types: 
       - labeled
-  push:
-    branches:
-      - master
+    labels:
+     - bug
+  
 permissions:
-  actions: write
   contents: write
 
 jobs:
   build-n-run:
-    if: github.event.label.name == 'bug'
     runs-on: ubuntu-latest
     env:
       REPO_NAME: ${{ github.event.repository.name }}
@@ -36,8 +34,6 @@ jobs:
         python3 ./.github/scripts/update_view.py ${{ github.event.issue.body }}
     - name: config git
       run: |
-        git config --global user.name "jungtop"
-        git config --global user.email "tenzintopjor27@gmail.com"
         git add -u
         git commit -m "updated views"
     - name: Push Changes
