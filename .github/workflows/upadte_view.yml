@@ -34,6 +34,6 @@ jobs:
       run : |
         source .env/bin/activate
         chmod +x ./.github/scripts/set_token.sh
-        . ./.github/scripts/set_token.sh
+        source ./.github/scripts/set_token.sh
         echo $GITHUB_TOKEN
         python3 ./.github/scripts/update_view.py ${{ github.event.issue.body }} $GITHUB_TOKEN
