@@ -74,11 +74,10 @@ def write_view(file_path:str,commit_msg:str,new_content:str) -> None:
     :param file_path: path of the file in the repo
     :param commit_msg: commit message
     :new_content: new content to write in the file_path
-    :token: Gtihub Token
     :return: None
     """
     collection_id = os.getenv("REPO_NAME")
-    Path(file_path).write_text(encoding="utf-8")
+    Path(file_path).write_text(new_content)
     #update_repo(g, collection_id, file_path, commit_msg, new_content)
 
 
@@ -87,7 +86,6 @@ def write_views(views_path, view_type):
     This function pushes the new views created to the repository itself
     :param views_path: Path of Views
     :view_type: Type of View
-    :token: Gtihub Token
     :return: None
     """
     for view_path in views_path:   
@@ -134,10 +132,8 @@ def get_view_class(view_name: str):
 
 def update_view(issue_message) -> None:
     """
-    This function updates the view when given a issue message of items with
-    tokens.
+    This function updates the view when given a issue message of items.
     :params issuse_message: a stirng which consist op item ids
-    :token : github token to push the changes
     :return : None
     """
     pecha_ids = extract_pecha_ids(issue_message)
