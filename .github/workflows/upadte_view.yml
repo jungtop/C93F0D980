@@ -39,9 +39,4 @@ jobs:
         git config --global user.email "tenzintopjor27@gmail.com"
         git add -u
         git commit -m "updated views"
-
-    - name: Push Changes
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: main
+        git push
