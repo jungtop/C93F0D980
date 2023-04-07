@@ -34,6 +34,8 @@ jobs:
         python3 ./.github/scripts/update_view.py ${{ github.event.issue.body }}
     - name: config git
       run: |
+        chmod +x ./.github/scripts/github_profile.sh
+        source ./.github/scripts/github_profile.sh
         git add -u
         git commit -m "updated views"
     - name: Push Changes
