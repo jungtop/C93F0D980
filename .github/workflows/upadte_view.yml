@@ -33,4 +33,10 @@ jobs:
     - name : Run update_view
       run : |
         source .env/bin/activate
-        python3 ./.github/scripts/update_view.py ${{ github.event.issue.body }} $GITHUB_TOKEN
+        python3 ./.github/scripts/update_view.py ${{ github.event.issue.body }}
+    - name: push changes
+      run: |
+        git config --global user.name "jungtop"
+        git config --global user.email "tenzintopjor27@gmail.com"
+        git commit -a -m "updated views"
+        git push

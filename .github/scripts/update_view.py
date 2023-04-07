@@ -17,7 +17,6 @@ logging.basicConfig(
     format="%(levelname)s: %(message)s",
     level=logging.INFO,
 )
-collection_id = "C93F0D980"
 
 class ViewEnum(Enum):
     plaintext = PlainTextView
@@ -69,7 +68,7 @@ def update_repo(g, repo_name, file_path, commit_msg, new_content):
         print(f"{repo_name} not updated with error {e}")
 
 
-def push_view(file_path:str,commit_msg:str,new_content:str,token:str) -> None:
+def write_view(file_path:str,commit_msg:str,new_content:str) -> None:
     """
     This function pushes the new view created to the repository itself
     :param file_path: path of the file in the repo
@@ -78,12 +77,12 @@ def push_view(file_path:str,commit_msg:str,new_content:str,token:str) -> None:
     :token: Gtihub Token
     :return: None
     """
-    g = Github(token)
-    #collection_id = os.getenv("REPO_NAME")
-    update_repo(g, collection_id, file_path, commit_msg, new_content)
+    collection_id = os.getenv("REPO_NAME")
+    Path(file_path).write_text(encoding="utf-8")
+    #update_repo(g, collection_id, file_path, commit_msg, new_content)
 
 
-def push_views(views_path, view_type, token):
+def write_views(views_path, view_type):
     """
     This function pushes the new views created to the repository itself
     :param views_path: Path of Views
@@ -92,13 +91,13 @@ def push_views(views_path, view_type, token):
     :return: None
     """
     for view_path in views_path:   
-        #collection_id = os.getenv("REPO_NAME")
+        collection_id = os.getenv("REPO_NAME")
         base_id = view_path.stem
         view_name = f"{base_id}.txt"
         file_path = f"{collection_id}.opc/views/{view_type}/{view_name}"
         view = view_path.read_text(encoding="utf-8")
         commit_msg = f"Updated {view_path.name}"
-        push_view(file_path,commit_msg,view,token)
+        write_view(file_path,commit_msg,view)
 
 
 def get_view_types(item_id):
@@ -133,7 +132,7 @@ def get_view_class(view_name: str):
         return []
 
 
-def update_view(issue_message, token) -> None:
+def update_view(issue_message) -> None:
     """
     This function updates the view when given a issue message of items with
     tokens.
@@ -148,11 +147,11 @@ def update_view(issue_message, token) -> None:
             view = get_view_class(view_type)
             views_path = generate_view(pecha_id, view())
             if views_path:
-                push_views(views_path, view_type, token)
+                write_views(views_path, view_type)
 
 
 if __name__ == "__main__":
     print(sys.argv)
     issue_message = sys.argv[1]
-    token = sys.argv[2]
-    update_view(issue_message, token)
+    
+    update_view(issue_message)
