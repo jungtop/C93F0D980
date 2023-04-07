@@ -30,7 +30,8 @@ jobs:
         pip install git+https://github.com/OpenPecha/Collection.git@create-meta
     - name : Run update_view
       run : |
+        source .env/bin/activate
         chmod +x ./.github/scripts/set_token.sh
         sh ./.github/scripts/set_token.sh
-        source .env/bin/activate
+        echo $GITHUB_TOKEN
         python3 ./.github/scripts/update_view.py ${{ github.event.issue.body }} $GITHUB_TOKEN
