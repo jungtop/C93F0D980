@@ -99,8 +99,7 @@ def get_view_types(item_id):
     :return views: Returns list of view 
     """
     views = []
-    collection_id = os.getenv("REPO_NAME")
-    meta_path = Path(f"./{collection_id}.opc/meta.yml")
+    meta_path = Path(f"./meta.yml")
     meta = load_yaml(meta_path)
     view_types = meta["item_views_map"]
     for view_type, body in view_types.items():
@@ -146,6 +145,5 @@ def update_view(issue_message, token) -> None:
 if __name__ == "__main__":
     print(sys.argv)
     issue_message = sys.argv[1]
-    token = os.environ.get("GITHUB_TOKEN")
-    print(token)
+    token = sys.argv[2]
     update_view(issue_message, token)
