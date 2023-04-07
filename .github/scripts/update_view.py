@@ -146,5 +146,6 @@ def update_view(issue_message, token) -> None:
 if __name__ == "__main__":
     print(sys.argv)
     issue_message = sys.argv[1]
-    token = sys.argv[2]
+    token = os.environ.get("GITHUB_TOKEN")
+    print(token)
     update_view(issue_message, token)
