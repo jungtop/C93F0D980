@@ -40,3 +40,8 @@ jobs:
         git add -u
         git commit -m "updated views"
         git push
+    - name: Push Changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: $GITHUB_TOKEN
+        branch: main
