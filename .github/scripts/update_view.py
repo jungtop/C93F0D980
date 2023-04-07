@@ -20,8 +20,8 @@ logging.basicConfig(
 
 
 class ViewEnum(Enum):
-    plaintext = PlainTextView
-    hfml = HFMLView
+    PlainTextView = PlainTextView
+    HFMLView = HFMLView
 
 
 def notifier(msg):
