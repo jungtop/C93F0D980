@@ -28,8 +28,8 @@ jobs:
         python3 -m venv .env
         source .env/bin/activate
         pip install git+https://github.com/OpenPecha/Collection.git@create-meta
-        chmod +x ./.github/scripts/set_toke.sh
-        sh ./.github/scripts/set_toke.sh
+        chmod +x ./.github/scripts/set_token.sh
+        sh ./.github/scripts/set_token.sh
     - name: Setup tmate session
       uses: mxschmitt/action-tmate@v3
     - name : Run update_view
