@@ -34,12 +34,8 @@ jobs:
       run : |
         source .env/bin/activate
         python3 ./.github/scripts/update_view.py ${{ github.event.issue.body }}
-    - name: Setup tmate session
-      uses: mxschmitt/action-tmate@v3
-    - name: push changes
+    - name: config git
       run: |
-        pwd
-        ls
         git config --global user.name "jungtop"
         git config --global user.email "tenzintopjor27@gmail.com"
         git add -u
