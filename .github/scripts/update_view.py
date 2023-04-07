@@ -17,11 +17,11 @@ logging.basicConfig(
     format="%(levelname)s: %(message)s",
     level=logging.INFO,
 )
-
+collection_id = "C93F0D980"
 
 class ViewEnum(Enum):
-    PlainTextView = PlainTextView
-    HFMLView = HFMLView
+    plaintext = PlainTextView
+    hfml = HFMLView
 
 
 def notifier(msg):
@@ -43,6 +43,7 @@ def update_repo(g, repo_name, file_path, commit_msg, new_content):
     :param new_cotent: new content to be push in the file_path
     :return: None
     """
+    print(file_path)
 
     repo = g.get_repo(f"{OWNER}/{repo_name}")
     contents = repo.get_contents(f"{file_path}", ref="main")
@@ -51,9 +52,9 @@ def update_repo(g, repo_name, file_path, commit_msg, new_content):
         message=commit_msg,
         content=new_content,
         sha=contents.sha,
-        branch="main",)
-    
-    """ try:
+        branch="main",
+    )
+    try:
         repo = g.get_repo(f"{OWNER}/{repo_name}")
         contents = repo.get_contents(f"{file_path}", ref="main")
         repo.update_file(
@@ -63,9 +64,9 @@ def update_repo(g, repo_name, file_path, commit_msg, new_content):
             sha=contents.sha,
             branch="main",
         )
-        notifier(f"{repo_name} updated ")
+        print(f"{repo_name} updated ")
     except Exception as e:
-        notifier(f"{repo_name} not updated with error {e}") """
+        print(f"{repo_name} not updated with error {e}")
 
 
 def push_view(file_path:str,commit_msg:str,new_content:str,token:str) -> None:
@@ -78,23 +79,22 @@ def push_view(file_path:str,commit_msg:str,new_content:str,token:str) -> None:
     :return: None
     """
     g = Github(token)
-    collection_id = os.getenv("REPO_NAME")
+    #collection_id = os.getenv("REPO_NAME")
     update_repo(g, collection_id, file_path, commit_msg, new_content)
 
 
-def push_views(pecha_id, views_path, view_type, token):
+def push_views(views_path, view_type, token):
     """
     This function pushes the new views created to the repository itself
-    :param pecha_id: item id
     :param views_path: Path of Views
     :view_type: Type of View
     :token: Gtihub Token
     :return: None
     """
     for view_path in views_path:   
-        collection_id = os.getenv("REPO_NAME")
+        #collection_id = os.getenv("REPO_NAME")
         base_id = view_path.stem
-        view_name = f"{pecha_id}_{base_id}.txt"
+        view_name = f"{base_id}.txt"
         file_path = f"{collection_id}.opc/views/{view_type}/{view_name}"
         view = view_path.read_text(encoding="utf-8")
         commit_msg = f"Updated {view_path.name}"
@@ -148,7 +148,7 @@ def update_view(issue_message, token) -> None:
             view = get_view_class(view_type)
             views_path = generate_view(pecha_id, view())
             if views_path:
-                push_views(pecha_id, views_path, view_type, token)
+                push_views(views_path, view_type, token)
 
 
 if __name__ == "__main__":
