@@ -11,6 +11,7 @@ from github import Github
 from openpecha.utils import load_yaml
 
 OWNER = "jungtop"
+collection_id =os.getenv("REPO_NAME")
 
 logging.basicConfig(
     filename="basefile_metadata.log",
@@ -53,7 +54,7 @@ def update_repo(g, repo_name, file_path, commit_msg, new_content):
         sha=contents.sha,
         branch="main",
     )
-    try:
+    """ try:
         repo = g.get_repo(f"{OWNER}/{repo_name}")
         contents = repo.get_contents(f"{file_path}", ref="main")
         repo.update_file(
@@ -65,7 +66,7 @@ def update_repo(g, repo_name, file_path, commit_msg, new_content):
         )
         print(f"{repo_name} updated ")
     except Exception as e:
-        print(f"{repo_name} not updated with error {e}")
+        print(f"{repo_name} not updated with error {e}") """
 
 
 def write_view(file_path:str,commit_msg:str,new_content:str) -> None:
@@ -76,7 +77,6 @@ def write_view(file_path:str,commit_msg:str,new_content:str) -> None:
     :new_content: new content to write in the file_path
     :return: None
     """
-    collection_id = os.getenv("REPO_NAME")
     Path(file_path).write_text(new_content)
     #update_repo(g, collection_id, file_path, commit_msg, new_content)
 
@@ -89,7 +89,6 @@ def write_views(views_path, view_type):
     :return: None
     """
     for view_path in views_path:   
-        collection_id = os.getenv("REPO_NAME")
         base_id = view_path.stem
         view_name = f"{base_id}.txt"
         file_path = f"{collection_id}.opc/views/{view_type}/{view_name}"
@@ -149,5 +148,4 @@ def update_view(issue_message) -> None:
 if __name__ == "__main__":
     print(sys.argv)
     issue_message = sys.argv[1]
-    
     update_view(issue_message)
