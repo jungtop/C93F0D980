@@ -44,7 +44,16 @@ def update_repo(g, repo_name, file_path, commit_msg, new_content):
     :return: None
     """
 
-    try:
+    repo = g.get_repo(f"{OWNER}/{repo_name}")
+    contents = repo.get_contents(f"{file_path}", ref="main")
+    repo.update_file(
+        path=contents.path,
+        message=commit_msg,
+        content=new_content,
+        sha=contents.sha,
+        branch="main",)
+    
+    """ try:
         repo = g.get_repo(f"{OWNER}/{repo_name}")
         contents = repo.get_contents(f"{file_path}", ref="main")
         repo.update_file(
@@ -56,7 +65,7 @@ def update_repo(g, repo_name, file_path, commit_msg, new_content):
         )
         notifier(f"{repo_name} updated ")
     except Exception as e:
-        notifier(f"{repo_name} not updated with error {e}")
+        notifier(f"{repo_name} not updated with error {e}") """
 
 
 def push_view(file_path:str,commit_msg:str,new_content:str,token:str) -> None:
