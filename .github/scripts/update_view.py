@@ -103,7 +103,7 @@ def get_view_types(item_id):
     meta = load_yaml(meta_path)
     view_types = meta["item_views_map"]
     for view_type, body in view_types.items():
-        if item_id in body.keys():
+        if item_id in list(body.keys()):
             views.append(view_type)
 
     return views
